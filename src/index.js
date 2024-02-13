@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const VoiceResponse = twilio.twiml.VoiceResponse;
 
 app.post('/answer', (req, res) => {
-    const twiml = new VoiceResponse();
+    const twiml = new VoiceResponse({voice: "Polly.Joanna"});
 
     console.log('Request received');
     console.log(req.body);
@@ -18,8 +18,9 @@ app.post('/answer', (req, res) => {
         input: 'speech',
         action: '/process_speech',
         method: 'POST',
+        timeout: 2,
     });
-    gather.say('Please tell us your request after the beep.');
+    gather.say('Hello, how can I help you today?');
 
     // If the user doesn't say anything, loop back to the beginning
     twiml.redirect('/answer');
@@ -29,23 +30,29 @@ app.post('/answer', (req, res) => {
 });
 
 app.post('/process_speech', async (req, res) => {
-    const twiml = new VoiceResponse();
+    console.log('Processing the speech input');
+    console.log(req.body);
 
-    // Process speech-to-text result here
-    // For example, send text to your AI bot and get a response
+    const twiml = new VoiceResponse({voice: "Polly.Joanna"});
 
-    // Placeholder for AI response
-    const aiResponse = "Here's a response from the AI based on user input.";
+    // Assuming you've processed the speech-to-text result and obtained an AI response
+    const aiResponse = "Here's the AI response for you order. It will be delivered in 30 minutes.";
 
     // Respond to the user with the AI's response
     twiml.say(aiResponse);
 
-    // Optionally, redirect to another step or end the call
-    //twiml.hangup();
+    // Add a pause for a few seconds before ending the call
+    // You can adjust the length attribute to change the pause duration (in seconds)
+    twiml.pause({ length: 1 });
+
+    // Say goodbye and then end the call
+    twiml.say("Thank you for using our service. Goodbye!");
+    twiml.hangup();
 
     res.type('text/xml');
     res.send(twiml.toString());
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
