@@ -10,6 +10,9 @@ const VoiceResponse = twilio.twiml.VoiceResponse;
 app.post('/answer', (req, res) => {
     const twiml = new VoiceResponse();
 
+    console.log('Request received');
+    console.log(req.body);
+
     // Use <Gather> to collect user input or say something to the user
     const gather = twiml.gather({
         input: 'speech',
