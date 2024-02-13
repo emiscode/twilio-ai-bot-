@@ -41,7 +41,7 @@ app.post('/process_speech', async (req, res) => {
     twiml.say(aiResponse);
 
     // Optionally, redirect to another step or end the call
-    twiml.hangup();
+    //twiml.hangup();
 
     res.type('text/xml');
     res.send(twiml.toString());
