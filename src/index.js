@@ -36,7 +36,7 @@ app.post('/process_speech', async (req, res) => {
     const twiml = new VoiceResponse({voice: "Polly.Joanna"});
 
     // Assuming you've processed the speech-to-text result and obtained an AI response
-    const aiResponse = "Here's the AI response for you order. It will be delivered in 30 minutes.";
+    const aiResponse = "Your order will be delivered in 30 minutes.";
 
     // Respond to the user with the AI's response
     twiml.say(aiResponse);
