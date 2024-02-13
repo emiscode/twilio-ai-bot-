@@ -29,13 +29,13 @@ app.post("/answer", (req, res) => {
     });
 
     // say something to the user
-    gather.say("Hello, how can I help you today?");
+    gather.say("Hello! How can I help you today?");
 
     // If the user doesn't say anything, loop back to the beginning
     twiml.redirect(`/answer?counter=${counter}`);
   } else {
     // Hang up after 3 attempts
-    twiml.say("No answer from the caller, goodbye!");
+    twiml.say("No answer from the caller. Goodbye!");
     twiml.hangup();
   }
 
