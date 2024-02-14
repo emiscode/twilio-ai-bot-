@@ -38,7 +38,10 @@ app.post("/answer", (req, res) => {
       action: "/process_speech",
       method: "POST",
       timeout: 5,
-      speechTimeout: "auto",
+      speechTimeout: 3,
+      language: "en-US",
+      speechModel: "phone_call",
+      enhanced: "true",
     });
 
     // say something to the user
@@ -130,7 +133,10 @@ app.post("/process_speech", async (req, res) => {
       action: "/process_speech",
       method: "POST",
       timeout: 5,
-      speechTimeout: "auto",
+      speechTimeout: 3,
+      language: "en-US",
+      speechModel: "phone_call",
+      enhanced: "true",
     });
 
     // If the user doesn't say anything, redirect back to /answer
