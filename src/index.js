@@ -37,11 +37,6 @@ app.post("/answer", (req, res) => {
       input: "speech",
       action: "/process_speech",
       method: "POST",
-      timeout: 5,
-      speechTimeout: 3,
-      language: "en-US",
-      speechModel: "phone_call",
-      enhanced: "true",
     });
 
     // say something to the user
@@ -116,7 +111,10 @@ app.post("/process_speech", async (req, res) => {
   console.log({ aiResponse });
 
   // Respond to the user with the AI's response
-  twiml.say(aiResponse.split("#order_confirmed#")[0]);
+  twiml.say(
+    aiResponse.split("#order_confirmed#")[0] ||
+      "I'm sorry, I didn't understand that. Can you please repeat?"
+  );
 
   // Check if the user has confirmed their order
   if (aiResponse.includes("#order_confirmed#")) {
@@ -132,11 +130,6 @@ app.post("/process_speech", async (req, res) => {
       input: "speech",
       action: "/process_speech",
       method: "POST",
-      timeout: 5,
-      speechTimeout: 3,
-      language: "en-US",
-      speechModel: "phone_call",
-      enhanced: "true",
     });
 
     // If the user doesn't say anything, redirect back to /answer
