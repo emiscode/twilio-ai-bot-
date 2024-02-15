@@ -21,7 +21,6 @@ let conversation_contexts = {};
 
 app.post("/answer", (req, res) => {
   console.log("called answer");
-  console.log("queries: ", req.query);
 
   const twiml = new VoiceResponse({ voice: "Polly.Matthew-Neural" });
   let counter = parseInt(req.query.counter, 10) || 0;
@@ -67,7 +66,7 @@ app.post("/process_speech", async (req, res) => {
 
   // The transcribed text is in the 'SpeechResult' parameter
   const speechResult = req.body.SpeechResult;
-  console.log("The user said:", speechResult);
+  console.log("The client said:", speechResult);
 
   // Get the client's phone number
   const phoneNumber = req.body.From;
@@ -78,9 +77,10 @@ app.post("/process_speech", async (req, res) => {
     conversation_contexts[phoneNumber] = [
       {
         role: "system",
-        content: `You are a helpful assistant for ordering food on a restaurant.
+        content: `You are a helpful assistant for ordering pizza on a restaurant.
         You can take orders, answer questions, and provide recommendations.
-        Make the response short and clear.
+        The menu includes mozzarella, pepperoni, and chicken pizzas.
+        Make the response to the client short and clear.
         When the client confirms the order then your answer should contains a summary of the order,
         and at the end a token to indicate the end of the conversation, like this #order_confirmed#.`,
       },
